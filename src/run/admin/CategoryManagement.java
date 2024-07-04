@@ -16,7 +16,7 @@ public class CategoryManagement {
             System.out.println("||       5. CHANGE STATUS CATEGORY        ||");
             System.out.println("||       6. SEARCH NAME CATEGORY          ||");
             System.out.println("||       7. SORT CATEGORY NAME FOR A-Z    ||");
-            System.out.println("||       8.                               ||");
+            System.out.println("||       8. pendi                         ||");
             System.out.println("||       9. BACK                          ||");
             System.out.println("||                                        ||");
             System.out.println("============================================");

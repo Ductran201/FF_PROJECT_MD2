@@ -14,8 +14,7 @@ public class AccountManagement {
             System.out.println("||     2. CHANGE STATUS ACCOUNT         ||");
             System.out.println("||     3. SEARCH ACCOUNT BY NAME        ||");
             System.out.println("||     4. SORT NAME ACCOUNT FOR A-Z     ||");
-            System.out.println("||     5. SHOW 5 ACCOUNT PER PAGE       ||");
-            System.out.println("||     6. BACK                          ||");
+            System.out.println("||     5. BACK                          ||");
             System.out.println("||                                      ||");
             System.out.println("==========================================");
             System.out.print("Your choice: ");
@@ -34,9 +33,6 @@ public class AccountManagement {
                     userService.sortByName();
                     break;
                 case 5:
-
-                    break;
-                case 6:
                     return;
                 default:
                     System.err.println("Wrong input");

@@ -19,7 +19,7 @@ public class ProductManagement {
             System.out.println("||     5. REMOVE THE PRODUCT            ||");
             System.out.println("||     6. CHANGE STATUS PRODUCT         ||");
             System.out.println("||     7. SEARCH WITH NAME PRODUCT      ||");
-            System.out.println("||     8. PRODUCT WITH RANGE PRICE      ||");
+            System.out.println("||     8. PRODUCT WITH RANGE PRICE/pending ||");
             System.out.println("||     9. BACK                          ||");
             System.out.println("||                                      ||");
             System.out.println("==========================================");
@@ -42,8 +42,10 @@ public class ProductManagement {
                     productHandleImpl.delete();
                     break;
                 case 6:
+                    productHandleImpl.changeStatus();
                     break;
                 case 7:
+                    productHandleImpl.searchByName();
                     break;
                 case 8:
                     break;

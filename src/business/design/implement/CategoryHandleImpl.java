@@ -111,8 +111,9 @@ public class CategoryHandleImpl implements ICategoryDesign {
 
         System.out.println("Result: ");
         categories.stream()
-                .filter(t -> t.getCategoryName().toLowerCase().contains(nameSearch))
+                .filter(t -> t.getCategoryName().toLowerCase().contains(nameSearch.toLowerCase()))
                 .forEach(Category::displayData);
+
     }
 
     public void sortByName() {
@@ -122,9 +123,8 @@ public class CategoryHandleImpl implements ICategoryDesign {
         } else {
             System.out.println("List category sort by name a-z: ");
             categories.sort((o1, o2) -> o1.getCategoryName().compareTo(o2.getCategoryName()));
-            for (Category c : categories) {
-                c.displayData();
-            }
+            categories.forEach(Category::displayData);
+
         }
 
     }

@@ -1,5 +1,6 @@
 package business.entity;
 
+import business.design.implement.CategoryHandleImpl;
 import business.design.implement.ProductHandleImpl;
 import business.utility.InputMethod;
 
@@ -12,9 +13,7 @@ public class Category implements Serializable {
     private String categoryName;
     private boolean categoryStatus;
     private Date createDate;
-    private int totalProduct = (int) ProductHandleImpl.products.stream()
-            .filter(p -> p.getCategory().equals(this))
-            .count();
+    private int totalProduct;
     ;
 
     public Category() {
@@ -75,9 +74,12 @@ public class Category implements Serializable {
     }
 
     public void updateTotalProduct() {
-        this.totalProduct = (int) ProductHandleImpl.products.stream()
-                .filter(p -> p.getCategory().equals(this))
+        System.out.println(ProductHandleImpl.products);
+        System.out.println(CategoryHandleImpl.categories);
+        int count = (int) ProductHandleImpl.products.stream()
+                .filter(p -> p.getCategory().getCategoryId().equals(this.categoryId))
                 .count();
+        this.totalProduct = count;
     }
 
     public void inputData(List<Category> categories, boolean isAdd) {

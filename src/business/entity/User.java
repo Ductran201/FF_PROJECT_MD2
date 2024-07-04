@@ -15,6 +15,7 @@ public class User implements Serializable {
     private String userPhone;
     private boolean userStatus;
     private RoleName userRole;
+    private Address UserAddress;
 
     public User() {
     }
@@ -88,14 +89,25 @@ public class User implements Serializable {
 
 
     public void displayData(){
-        System.out.println("------------------------------------------------------------------------------------");
-        System.out.printf("%-5s |%-20s |%-20s |%-12s |%-6s |%-6s |\n"
+        System.out.println("-----------------------------------------------------------" +
+                "-------------------------------");
+        System.out.printf("%-5s |%-20s |%-20s |%-12s |%-6s |%-15s |\n"
                 ,userId,userEmail,userFullName,userPhone,userStatus,userRole);
+    }
+
+    public void displayDataUser(){
+        System.out.println("-----------------------------------------------------------" +
+                "-------------------------------");
+        System.out.printf("%-20s |%-20s |%-12s |\n"
+                ,userEmail,userFullName,userPhone);
     }
 
     public void inputData(boolean isAdd){
         if (isAdd){
             userId= UserService.getNewId();
+            userRole=RoleName.ROLE_USER;
+            userStatus=true;
+
         }
         System.out.println("Enter your email");
         userEmail=validateUserEmail(UserService.users);
@@ -105,8 +117,7 @@ public class User implements Serializable {
         userFullName= InputMethod.getString();
         System.out.println("Enter your phone number");
         userPhone=validateUserPhone(UserService.users);
-        userRole=RoleName.ROLE_USER;
-        userStatus=true;
+
     }
 
 //    VALIDATE
@@ -119,7 +130,7 @@ public class User implements Serializable {
                 if (users.stream().noneMatch(t->t.getUserEmail().equals(userEmailInput))){
                     return userEmailInput;
                 }else {
-                    System.err.println("This email has used to sign up, please try again");
+                    System.err.println("This email has used by other person, please try again");
                 }
             } else {
                 System.err.println("Wrong email format, please try again");

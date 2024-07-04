@@ -1,5 +1,6 @@
 package business.design.implement;
 
+import business.entity.Category;
 import business.utility.IOFile;
 import business.utility.InputMethod;
 import business.design.IProductDesign;
@@ -60,12 +61,15 @@ public class ProductHandleImpl implements IProductDesign {
     public void edit() {
         System.out.println("Enter the id of product you want to edit");
         int idEdit = InputMethod.getInteger();
-        Product productEdit=findById(idEdit);
+        Product productEdit = findById(idEdit);
         if (productEdit != null) {
             System.out.println("The previous information of this product");
             productEdit.displayData();
+            Category oldCategory = productEdit.getCategory();
             productEdit.inputData(products, CategoryHandleImpl.categories, false);
+            oldCategory.updateTotalProduct();
             productEdit.getCategory().updateTotalProduct();
+            ProductHandleImpl.products.set(ProductHandleImpl.products.indexOf(findById(productEdit.getProductId())),productEdit);
             IOFile.writeObjectToFile(products, IOFile.PRODUCT_PATH);
             IOFile.writeObjectToFile(CategoryHandleImpl.categories, IOFile.CATEGORY_PATH);
             System.out.println("Edit successfully!!");
@@ -97,7 +101,9 @@ public class ProductHandleImpl implements IProductDesign {
     }
 
     public static int getNewId() {
-        return products.stream().map(Product::getProductId).max(Comparator.naturalOrder()).orElse(0) + 1;
+        return products.stream()
+                .map(Product::getProductId).max(Comparator.naturalOrder())
+                .orElse(0) + 1;
     }
 
     public void changeStatus() {
@@ -112,4 +118,36 @@ public class ProductHandleImpl implements IProductDesign {
             System.err.println("No category found");
         }
     }
+
+    public void searchByName() {
+        System.out.println("Enter category name for search: ");
+        String nameSearch = InputMethod.getString();
+
+        System.out.println("Result: ");
+        products.stream()
+                .filter(t -> t.getProductName().toLowerCase().contains(nameSearch.toLowerCase()))
+                .forEach(Product::displayData);
+    }
+
+    public void searchByCategory() {
+
+        CategoryHandleImpl categoryHandle = new CategoryHandleImpl();
+        categoryHandle.showAll();
+        System.out.println("Enter the id of category: ");
+        String idCategory = InputMethod.getString();
+
+        if (categoryHandle.findById(idCategory)==null){
+            System.err.println("No category found with this id");
+        }else {
+            System.out.println("List product of category "+ categoryHandle.findById(idCategory).getCategoryName()+" :");
+            products.stream()
+                    .filter(p->p.getCategory().equals(categoryHandle.findById(idCategory)))
+                    .forEach(Product::displayData);
+        }
+
+
+    }
+
+
 }
+

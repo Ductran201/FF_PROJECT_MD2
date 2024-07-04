@@ -4,8 +4,11 @@ import business.utility.IOFile;
 import business.entity.User;
 import business.utility.InputMethod;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserService {
 
@@ -30,9 +33,6 @@ public class UserService {
 
     }
 
-    public void verifySignUp() {
-
-    }
 
     public User findUserByEmail(String email) {
         return users.stream()
@@ -56,7 +56,7 @@ public class UserService {
     }
 
     public void showAllAccount() {
-        System.out.printf("%-5s |%-20s |%-20s |%-12s |%-6s |%-6s |\n"
+        System.out.printf("%-5s |%-20s |%-20s |%-12s |%-6s |%-15s |\n"
                 , "ID", "EMAIL", "FULL NAME", "PHONE", "STATUS", "ROLE");
         users.forEach(User::displayData);
     }
@@ -92,7 +92,9 @@ public class UserService {
 
     public void sortByName() {
         System.out.println("Order name a-z: ");
-        users.stream().sorted((o1, o2) -> o1.getUserName().compareTo(o2.getUserName())).forEach(User::displayData);
+        users.sort(((o1, o2) -> o1.getUserName().compareTo(o2.getUserName())));
+        users.forEach(User::displayData);
+
     }
 
 
