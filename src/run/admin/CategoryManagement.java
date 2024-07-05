@@ -1,10 +1,10 @@
 package run.admin;
 
 import business.utility.InputMethod;
-import business.design.implement.CategoryHandleImpl;
+import business.design.implement.CategoryServiceImpl;
 
 public class CategoryManagement {
-    CategoryHandleImpl categoryHandleImpl =new CategoryHandleImpl();
+    CategoryServiceImpl categoryServiceImpl =new CategoryServiceImpl();
     public void openCategoryManagement() {
         while (true){
             System.out.println("============CATEGORY MANAGEMENT=============");
@@ -24,25 +24,25 @@ public class CategoryManagement {
             byte choice = InputMethod.getByte();
             switch (choice) {
                 case 1:
-                    categoryHandleImpl.showAll();
+                    categoryServiceImpl.showAll();
                     break;
                 case 2:
-                    categoryHandleImpl.addNew();
+                    categoryServiceImpl.addNew();
                     break;
                 case 3:
-                    categoryHandleImpl.edit();
+                    categoryServiceImpl.edit();
                     break;
                 case 4:
-                    categoryHandleImpl.delete();
+                    categoryServiceImpl.delete();
                     break;
                 case 5:
-                    categoryHandleImpl.changeStatus();
+                    categoryServiceImpl.changeStatus();
                     break;
                 case 6:
-                    categoryHandleImpl.searchByName();
+                    categoryServiceImpl.searchByName();
                     break;
                 case 7:
-                    categoryHandleImpl.sortByName();
+                    categoryServiceImpl.sortByName();
                     break;
                 case 8:
                     break;

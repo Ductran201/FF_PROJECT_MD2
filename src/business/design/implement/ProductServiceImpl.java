@@ -1,6 +1,5 @@
 package business.design.implement;
 
-import business.entity.Category;
 import business.utility.IOFile;
 import business.utility.InputMethod;
 import business.design.IProductDesign;
@@ -9,7 +8,7 @@ import business.entity.Product;
 import java.util.Comparator;
 import java.util.List;
 
-public class ProductHandleImpl implements IProductDesign {
+public class ProductServiceImpl implements IProductDesign {
 
     public static List<Product> products;
 
@@ -45,14 +44,12 @@ public class ProductHandleImpl implements IProductDesign {
 
             System.out.println("Enter the information of product " + i);
             Product newProduct = new Product();
-            newProduct.inputData(products, CategoryHandleImpl.categories, true);
+            newProduct.inputData(products, CategoryServiceImpl.categories, true);
             products.add(newProduct);
-            newProduct.getCategory().updateTotalProduct();
             IOFile.writeObjectToFile(products, IOFile.PRODUCT_PATH);
 
         }
-//        CategoryHandleImpl.updateTotalProductForEachCate();
-        IOFile.writeObjectToFile(CategoryHandleImpl.categories, IOFile.CATEGORY_PATH);
+//        updateTotalFile();
         System.out.println("Add successfully!!");
 
     }
@@ -65,13 +62,9 @@ public class ProductHandleImpl implements IProductDesign {
         if (productEdit != null) {
             System.out.println("The previous information of this product");
             productEdit.displayData();
-            Category oldCategory = productEdit.getCategory();
-            productEdit.inputData(products, CategoryHandleImpl.categories, false);
-            oldCategory.updateTotalProduct();
-            productEdit.getCategory().updateTotalProduct();
-            ProductHandleImpl.products.set(ProductHandleImpl.products.indexOf(findById(productEdit.getProductId())),productEdit);
+            productEdit.inputData(products, CategoryServiceImpl.categories, false);
             IOFile.writeObjectToFile(products, IOFile.PRODUCT_PATH);
-            IOFile.writeObjectToFile(CategoryHandleImpl.categories, IOFile.CATEGORY_PATH);
+//            updateTotalFile();
             System.out.println("Edit successfully!!");
         } else {
             System.err.println("No product found");
@@ -84,16 +77,12 @@ public class ProductHandleImpl implements IProductDesign {
         int idDelete = InputMethod.getInteger();
         Product productDelete = findById(idDelete);
         if (productDelete != null) {
-//        delete product => total product of category will decrease
-//            Category oldCategory = productDelete.getCategory();
-//            oldCategory.setTotalProduct(oldCategory.getTotalProduct() - 1);
+
 //            delete product
             products.remove(productDelete);
-            productDelete.getCategory().updateTotalProduct();
 //            write to file
             IOFile.writeObjectToFile(products, IOFile.PRODUCT_PATH);
-            IOFile.writeObjectToFile(CategoryHandleImpl.categories, IOFile.CATEGORY_PATH);
-
+//            updateTotalFile();
             System.out.println("Delete successfully!!");
         } else {
             System.err.println("No product found");
@@ -105,6 +94,12 @@ public class ProductHandleImpl implements IProductDesign {
                 .map(Product::getProductId).max(Comparator.naturalOrder())
                 .orElse(0) + 1;
     }
+
+//update total product of category to file.
+//    public void updateTotalFile() {
+//        CategoryHandleImpl.categories.forEach(Category::updateTotalProduct);
+//        IOFile.writeObjectToFile(CategoryHandleImpl.categories, IOFile.CATEGORY_PATH);
+//    }
 
     public void changeStatus() {
         System.out.println("Enter the id of the category you want to change: ");
@@ -131,17 +126,17 @@ public class ProductHandleImpl implements IProductDesign {
 
     public void searchByCategory() {
 
-        CategoryHandleImpl categoryHandle = new CategoryHandleImpl();
+        CategoryServiceImpl categoryHandle = new CategoryServiceImpl();
         categoryHandle.showAll();
         System.out.println("Enter the id of category: ");
         String idCategory = InputMethod.getString();
 
-        if (categoryHandle.findById(idCategory)==null){
+        if (categoryHandle.findById(idCategory) == null) {
             System.err.println("No category found with this id");
-        }else {
-            System.out.println("List product of category "+ categoryHandle.findById(idCategory).getCategoryName()+" :");
+        } else {
+            System.out.println("List product of category " + categoryHandle.findById(idCategory).getCategoryName() + " :");
             products.stream()
-                    .filter(p->p.getCategory().equals(categoryHandle.findById(idCategory)))
+                    .filter(p -> p.getCategory().getCategoryId().equals(categoryHandle.findById(idCategory).getCategoryId()))
                     .forEach(Product::displayData);
         }
 

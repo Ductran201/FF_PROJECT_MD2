@@ -1,7 +1,7 @@
 package business.entity;
 
-import business.design.implement.CategoryHandleImpl;
-import business.design.implement.ProductHandleImpl;
+import business.design.implement.CategoryServiceImpl;
+import business.design.implement.ProductServiceImpl;
 import business.utility.InputMethod;
 
 import java.io.Serializable;
@@ -86,9 +86,9 @@ public class Product implements Serializable {
 
 
     public void inputData(List<Product> products, List<Category> categories, boolean isAdd) {
-        CategoryHandleImpl categoryHandle = new CategoryHandleImpl();
+        CategoryServiceImpl categoryHandle = new CategoryServiceImpl();
         if (isAdd) {
-            productId = ProductHandleImpl.getNewId();
+            productId = ProductServiceImpl.getNewId();
             productStatus = true;
         }
 
@@ -99,95 +99,63 @@ public class Product implements Serializable {
         stock = validateStock();
         System.out.println("Enter the category of product");
 
+//        Choose Category by order numerical
         for (int i = 0; i < categories.size(); i++) {
             System.out.printf("%-5d |%-15s \n", (i + 1), categories.get(i).getCategoryName());
         }
 
 
         while (true) {
-//            System.out.println("Choose category by the number ");
+            System.out.println("Choose category by the number ");
             short number = InputMethod.getShort();
 
             if (number > categories.size()) {
                 System.err.println("number is invalid");
 
-            }
-//        else if (category == categories.get(number - 1)) {
-////            nothing happened because no change the category
-//        }
-            else { // change category
-//                Category oldCategory = category;
+            } else {
+                // Change category
                 this.category = categories.get(number - 1);
-//                if (oldCategory != null) {//edit has old category
-//                    oldCategory.updateTotalProduct();
-//                }
-//                this.category.updateTotalProduct();
                 break;
             }
         }
-//        c2
-//        categories.forEach(Category::displayData);
-//
-//        while (true) {
-//            String idCat = InputMethod.getString();
-//            if (categoryHandle.findById(idCat) != null) {
-//                category = categoryHandle.findById(idCat);
-//                break;
-//            } else {
-//                System.err.println("khong co cat phu hop");
-//            }
-//        }
-//            if (isAdd) {
-//                // add product => increase the total product in category
-//                category.setTotalProduct(category.getTotalProduct() + 1);
-//                IOFile.writeObjectToFile(categories,IOFile.CATEGORY_PATH);
-//            } else {
-////                total product of old cat decrease
-//                oldCategory.setTotalProduct(oldCategory.getTotalProduct() - 1);
-////                total product of new cat increase
-//                category.setTotalProduct(category.getTotalProduct() + 1);
-//                IOFile.writeObjectToFile(categories,IOFile.CATEGORY_PATH);
-//            }
+
         System.out.println("=====================================");
     }
 
-//VALIDATE INPUT
-private String validateProductName(List<Product> products) {
-
-    while (true) {
-        String productNameInput = InputMethod.getString();
-        if (products.stream().noneMatch(t -> t.productName.equals(productNameInput))) {
-            return productNameInput;
-        } else {
-            System.err.println("Product name is already has, please try again");
+    //VALIDATE INPUT
+    private String validateProductName(List<Product> products) {
+        while (true) {
+            String productNameInput = InputMethod.getString();
+            if (products.stream().noneMatch(t -> t.productName.equals(productNameInput))) {
+                return productNameInput;
+            } else {
+                System.err.println("Product name is already has, please try again");
+            }
         }
     }
 
-}
+    private int validateProductPrice() {
+        while (true) {
+            int productPriceInput = InputMethod.getInteger();
+            if (productPriceInput >= 0) {
+                return productPriceInput;
+            } else {
+                System.err.println("Price of product must >= 0, please try again");
 
-private int validateProductPrice() {
-
-    while (true) {
-        int productPriceInput = InputMethod.getInteger();
-        if (productPriceInput >= 0) {
-            return productPriceInput;
-        } else {
-            System.err.println("Price of product must >= 0, please try again");
-
+            }
         }
     }
-}
 
-private int validateStock() {
-    while (true) {
-        System.out.println("Enter the stock of product: ");
-        int productStockInput = InputMethod.getInteger();
-        if (productStockInput < 10) {
-            System.err.println("The price of product must >= 10 !");
-        } else {
-            return productStockInput;
+    private int validateStock() {
+        while (true) {
+            System.out.println("Enter the stock of product: ");
+            int productStockInput = InputMethod.getInteger();
+            if (productStockInput < 10) {
+                System.err.println("The price of product must >= 10 !");
+            } else {
+                return productStockInput;
+            }
         }
     }
-}
 
 }

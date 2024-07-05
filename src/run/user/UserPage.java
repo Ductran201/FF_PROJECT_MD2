@@ -1,8 +1,8 @@
 package run.user;
 
 
-import business.design.implement.CategoryHandleImpl;
-import business.design.implement.ProductHandleImpl;
+import business.design.implement.CategoryServiceImpl;
+import business.design.implement.ProductServiceImpl;
 import business.design.implement.UserService;
 import business.utility.IOFile;
 import business.utility.InputMethod;
@@ -10,12 +10,12 @@ import run.FastFood;
 
 public class UserPage {
     CartManagement cartManagement = new CartManagement();
-    ProductHandleImpl productHandle = new ProductHandleImpl();
-    CategoryHandleImpl categoryHandle = new CategoryHandleImpl();
+    ProductServiceImpl productHandle = new ProductServiceImpl();
+    CategoryServiceImpl categoryHandle = new CategoryServiceImpl();
     UserService userService = new UserService();
 
     public void openUserPage() {
-        System.out.println("WELCOME " + FastFood.userCurrent.getUserName().toUpperCase() + " TO FAST FOOD");
+//        System.out.println("WELCOME " + FastFood.userCurrent.getUserName().toUpperCase() + " TO FAST FOOD");
         while (true) {
             System.out.println("==============USER PAGE===================");
             System.out.println("||                                      ||");

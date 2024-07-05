@@ -1,7 +1,6 @@
 package business.entity;
 
-import business.design.implement.CategoryHandleImpl;
-import business.design.implement.ProductHandleImpl;
+import business.design.implement.ProductServiceImpl;
 import business.utility.InputMethod;
 
 import java.io.Serializable;
@@ -13,18 +12,17 @@ public class Category implements Serializable {
     private String categoryName;
     private boolean categoryStatus;
     private Date createDate;
-    private int totalProduct;
-    ;
+//    private int totalProduct;
 
     public Category() {
     }
 
-    public Category(String categoryId, String categoryName, boolean categoryStatus, Date createDate, int totalProduct) {
+    public Category(String categoryId, String categoryName, boolean categoryStatus, Date createDate) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.categoryStatus = categoryStatus;
         this.createDate = createDate;
-        this.totalProduct = totalProduct;
+//        this.totalProduct = totalProduct;
     }
 
     public String getCategoryName() {
@@ -59,34 +57,32 @@ public class Category implements Serializable {
         this.createDate = createDate;
     }
 
-    public int getTotalProduct() {
-        return totalProduct;
-    }
-
-    public void setTotalProduct(int totalProduct) {
-        this.totalProduct = totalProduct;
-    }
+//    public int getTotalProduct() {
+//        return totalProduct;
+//    }
+//
+//    public void setTotalProduct(int totalProduct) {
+//        this.totalProduct = totalProduct;
+//    }
 
     public void displayData() {
         System.out.println("----------------------------------------------------------------------------------");
         System.out.printf("%-6s |%-15s |%-10s |%-30s |%-15d\n",
-                categoryId, categoryName, categoryStatus ? "Active" : "Block", createDate, totalProduct);
+                categoryId, categoryName, categoryStatus ? "Active" : "Block", createDate, updateTotalProduct());
     }
 
-    public void updateTotalProduct() {
-        System.out.println(ProductHandleImpl.products);
-        System.out.println(CategoryHandleImpl.categories);
-        int count = (int) ProductHandleImpl.products.stream()
-                .filter(p -> p.getCategory().getCategoryId().equals(this.categoryId))
+    public int updateTotalProduct() {
+
+        return (int) ProductServiceImpl.products.stream()
+                .filter(p -> p.getCategory().getCategoryId().equals(this.getCategoryId()))
                 .count();
-        this.totalProduct = count;
     }
 
     public void inputData(List<Category> categories, boolean isAdd) {
         if (isAdd) {
             categoryId = validateCategoryId(categories);
             categoryStatus = true;
-            totalProduct = 0;
+//            totalProduct = 0;
         }
         categoryName = validateCategoryName(categories);
         createDate = new Date();

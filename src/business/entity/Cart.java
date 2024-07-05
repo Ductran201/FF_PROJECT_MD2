@@ -1,7 +1,7 @@
 package business.entity;
 
 import business.design.implement.CartServiceImpl;
-import business.design.implement.ProductHandleImpl;
+import business.design.implement.ProductServiceImpl;
 import business.utility.InputMethod;
 
 import java.io.Serializable;
@@ -62,7 +62,7 @@ public class Cart implements Serializable {
     }
 
     public void inputData(boolean isAdd, List<Cart> cartList) {
-        ProductHandleImpl productHandle = new ProductHandleImpl();
+        ProductServiceImpl productHandle = new ProductServiceImpl();
 
         if (isAdd) {//add
             cartItemId = CartServiceImpl.getNewId();

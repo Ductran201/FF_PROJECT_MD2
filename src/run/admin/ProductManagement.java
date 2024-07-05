@@ -1,12 +1,12 @@
 package run.admin;
 
-import business.design.implement.CategoryHandleImpl;
+import business.design.implement.CategoryServiceImpl;
 import business.utility.InputMethod;
-import business.design.implement.ProductHandleImpl;
+import business.design.implement.ProductServiceImpl;
 
 
 public class ProductManagement {
-    ProductHandleImpl productHandleImpl = new ProductHandleImpl();
+    ProductServiceImpl productServiceImpl = new ProductServiceImpl();
 
     public void openProductManagement() {
         while (true) {
@@ -27,25 +27,25 @@ public class ProductManagement {
             byte choice = InputMethod.getByte();
             switch (choice) {
                 case 1:
-                    new CategoryHandleImpl().showAll();
+                    new CategoryServiceImpl().showAll();
                     break;
                 case 2:
-                    productHandleImpl.showAll();
+                    productServiceImpl.showAll();
                     break;
                 case 3:
-                    productHandleImpl.addNew();
+                    productServiceImpl.addNew();
                     break;
                 case 4:
-                    productHandleImpl.edit();
+                    productServiceImpl.edit();
                     break;
                 case 5:
-                    productHandleImpl.delete();
+                    productServiceImpl.delete();
                     break;
                 case 6:
-                    productHandleImpl.changeStatus();
+                    productServiceImpl.changeStatus();
                     break;
                 case 7:
-                    productHandleImpl.searchByName();
+                    productServiceImpl.searchByName();
                     break;
                 case 8:
                     break;

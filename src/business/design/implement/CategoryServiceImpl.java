@@ -7,7 +7,7 @@ import business.entity.Category;
 
 import java.util.*;
 
-public class CategoryHandleImpl implements ICategoryDesign {
+public class CategoryServiceImpl implements ICategoryDesign {
     public static List<Category> categories;
 
     static {
@@ -32,14 +32,6 @@ public class CategoryHandleImpl implements ICategoryDesign {
             categories.forEach(Category::displayData);
         }
     }
-
-//    public static void updateTotalProductBegin(){
-//        categories.forEach(c -> {
-//            c.setTotalProduct((int) ProductHandleImpl.products.stream()
-//                    .filter(p->p.getCategory().equals(c))
-//                    .count());
-//        });
-//     }
 
     @Override
     public void addNew() {
@@ -79,7 +71,7 @@ public class CategoryHandleImpl implements ICategoryDesign {
         String idDelete = InputMethod.getString();
         if (findById(idDelete) != null) {
 //       check if it has product it can not delete
-            boolean hasProduct = ProductHandleImpl.products.stream()
+            boolean hasProduct = ProductServiceImpl.products.stream()
                     .anyMatch(t -> t.getCategory().getCategoryId().equals(idDelete));
             if (hasProduct) {
                 System.err.println("Can not delete this category because it has product");

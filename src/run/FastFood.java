@@ -1,6 +1,5 @@
 package run;
 
-import business.design.implement.CategoryHandleImpl;
 import business.entity.RoleName;
 import business.utility.IOFile;
 import business.utility.InputMethod;
@@ -35,12 +34,12 @@ public class FastFood {
             byte choice = InputMethod.getByte();
             switch (choice) {
                 case 1:
-                    signIn();
-//                    adminPage.openAdminPage();
+//                    signIn();
+                    adminPage.openAdminPage();
                     break;
                 case 2:
-                    signUp();
-//                    userPage.openUserPage();
+//                    signUp();
+                    userPage.openUserPage();
                     break;
                 case 3:
                     getPassword();
