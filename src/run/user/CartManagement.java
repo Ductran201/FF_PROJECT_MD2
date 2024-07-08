@@ -1,10 +1,10 @@
 package run.user;
 
-import business.design.implement.CartServiceImpl;
+import business.design.implement.CartService;
 import business.utility.InputMethod;
 
 public class CartManagement {
-    CartServiceImpl cartServiceImpl = new CartServiceImpl();
+    CartService cartService = new CartService();
 
     public void openCartManagement() {
         while (true) {
@@ -22,19 +22,19 @@ public class CartManagement {
             byte choice = InputMethod.getByte();
             switch (choice) {
                 case 1:
-                    cartServiceImpl.showAll();
+                    cartService.showAll();
                     break;
                 case 2:
-                    cartServiceImpl.addNew();
+                    cartService.addNew();
                     break;
                 case 3:
-                    cartServiceImpl.edit();
+                    cartService.edit();
                     break;
                 case 4:
-                    cartServiceImpl.delete();
+                    cartService.delete();
                     break;
                 case 5:
-                    cartServiceImpl.deleteAllCart();
+                    cartService.deleteAllCart();
                     break;
                 case 6:
                     return;

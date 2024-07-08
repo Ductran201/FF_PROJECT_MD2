@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements ICategoryDesign {
             System.err.println("No have any categories");
         } else {
             System.out.printf("%-6s |%-15s |%-10s |%-30s |%-15s\n",
-                    "ID", "CATEGORY NAME", "STATUS", "CREATE DATE","TOTAL PRODUCT");
+                    "ID", "CATEGORY NAME", "STATUS", "CREATE DATE", "TOTAL PRODUCT");
             categories.forEach(Category::displayData);
         }
     }
@@ -42,9 +42,9 @@ public class CategoryServiceImpl implements ICategoryDesign {
             System.out.println("Enter the information of category " + i);
 //            add to file
             Category newCategory = new Category();
-            newCategory.inputData(categories,true);
+            newCategory.inputData(categories, true);
             categories.add(newCategory);
-            IOFile.writeObjectToFile(categories,IOFile.CATEGORY_PATH);
+            IOFile.writeObjectToFile(categories, IOFile.CATEGORY_PATH);
         }
 
         System.out.println("Add successfully!!");
@@ -57,8 +57,8 @@ public class CategoryServiceImpl implements ICategoryDesign {
         if (findById(idEdit) != null) {
             System.out.println("The previous of this category");
             findById(idEdit).displayData();
-            findById(idEdit).inputData(categories,false);
-            IOFile.writeObjectToFile(categories,IOFile.CATEGORY_PATH);
+            findById(idEdit).inputData(categories, false);
+            IOFile.writeObjectToFile(categories, IOFile.CATEGORY_PATH);
             System.out.println("Edit successfully!!");
         } else {
             System.err.println("No category found");
@@ -77,7 +77,7 @@ public class CategoryServiceImpl implements ICategoryDesign {
                 System.err.println("Can not delete this category because it has product");
             } else {
                 categories.remove(findById(idDelete));
-                IOFile.writeObjectToFile(categories,IOFile.CATEGORY_PATH);
+                IOFile.writeObjectToFile(categories, IOFile.CATEGORY_PATH);
                 System.out.println("Delete successfully!!");
             }
         } else {
@@ -90,7 +90,7 @@ public class CategoryServiceImpl implements ICategoryDesign {
         String idChangeStatus = InputMethod.getString();
         if (findById(idChangeStatus) != null) {
             findById(idChangeStatus).setCategoryStatus(!findById(idChangeStatus).isCategoryStatus());
-            IOFile.writeObjectToFile(categories,IOFile.CATEGORY_PATH);
+            IOFile.writeObjectToFile(categories, IOFile.CATEGORY_PATH);
             System.out.println("Change status successfully!!");
         } else {
             System.err.println("No category found");
@@ -118,7 +118,18 @@ public class CategoryServiceImpl implements ICategoryDesign {
             categories.forEach(Category::displayData);
 
         }
-
     }
+
+    public void sortByTotalProduct() {
+        if (categories.isEmpty()) {
+            System.err.println("No have any Categories");
+        } else {
+            System.out.println("List category sort by total product descending: ");
+            categories.stream()
+                    .sorted((o1, o2) -> o2.updateTotalProduct() - o1.updateTotalProduct())
+                    .forEach(Category::displayData);
+        }
+    }
+
 }
 

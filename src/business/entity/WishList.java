@@ -1,19 +1,26 @@
 package business.entity;
 
+import business.design.implement.AddressServiceImpl;
+import business.design.implement.ProductServiceImpl;
+import business.design.implement.WishListService;
+import business.utility.InputMethod;
+import run.FastFood;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class WishList {
+public class WishList implements Serializable {
     private int idWishList;
-    private int idUser;
-    private int idProduct;
+    private User user;
+    private Product product;
 
     public WishList() {
     }
 
-    public WishList(int idWishList, int idUser, int idProduct) {
+    public WishList(int idWishList, User user, Product product) {
         this.idWishList = idWishList;
-        this.idUser = idUser;
-        this.idProduct = idProduct;
+        this.user = user;
+        this.product = product;
     }
 
     public int getIdWishList() {
@@ -24,28 +31,54 @@ public class WishList {
         this.idWishList = idWishList;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getIdProduct() {
-        return idProduct;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public void displayData(){
+    public void displayData() {
+        System.out.println("--------------------------------------------------------------------");
+        System.out.printf("%-5s |%-20s |%-20s |%-15s |\n"
+                ,idWishList, user.getUserFullName(), product.getProductName(), product.getProductPrice());
 
     }
 
-    public void inputData(List<Product> listProduct, boolean isAdd){
-        if (isAdd){
+    public void inputData(List<WishList> wishList) {
+        idWishList = WishListService.getNewId();
+        user = FastFood.userCurrent;
+        product = validateProductWishList(wishList);
+    }
+
+    public Product validateProductWishList(List<WishList> wishList) {
+        while (true) {
+            ProductServiceImpl productService = new ProductServiceImpl();
+            System.out.println("Enter the id of product");
+            int idProductInput = InputMethod.getInteger();
+//check duplicate in wish list
+            boolean existProduct = ProductServiceImpl.products.stream()
+                    .anyMatch(p -> p.getProductId() == idProductInput);
+            boolean duplicateWishList = wishList.stream()
+                    .anyMatch(w -> w.getProduct().getProductId() == idProductInput);
+            if (existProduct){
+                if (duplicateWishList){
+                    System.err.println("WishList is already exist");
+                }else {
+                    return productService.findById(idProductInput);
+                }
+            }else {
+                System.err.println("Product does not exist");
+            }
 
         }
     }

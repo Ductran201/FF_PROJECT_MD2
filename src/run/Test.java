@@ -13,17 +13,19 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-//        User admin = new User();
-//        admin.setUserId(1);
-//        admin.setUserEmail("admin@gmail.com");
-//        admin.setUserPassword("123456");
-//        admin.setUserName("");
-//        admin.setUserPhone("");
-//        admin.setUserRole(RoleName.ROLE_ADMIN);
-//        admin.setUserStatus(true);
-//        UserService.users.add(admin);
-//        IOFile.writeObjectToFile(UserService.users,IOFile.USER_PATH);
+        User admin = new User();
+        admin.setUserId(1);
+        admin.setUserEmail("admin@gmail.com");
+        admin.setUserPassword("123456");
+        admin.setUserFullName("");
+        admin.setUserPhone("");
+        admin.setUserRole(RoleName.ROLE_ADMIN);
+        admin.setUserStatus(true);
+        UserService.users.add(admin);
+        IOFile.writeObjectToFile(UserService.users,IOFile.USER_PATH);
 
+
+//        test
 //        List<Category> listTest=IOFile.readObjectFromFile(IOFile.TEST_PATH);
 //
 //

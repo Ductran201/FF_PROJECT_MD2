@@ -77,13 +77,12 @@ public class Product implements Serializable {
     }
 
     public void displayData() {
-        System.out.println("------------------------------------------------" +
+        System.out.println("----------------------------------------------" +
                 "--------------------------------------------------");
         System.out.printf("%-10s |%-15s |%-15d |%-10s |%-20s |%-15s |\n", productId, productName,
                 productPrice, stock, category.getCategoryName(), productStatus ? "Stocking" : "Out of stock");
 
     }
-
 
     public void inputData(List<Product> products, List<Category> categories, boolean isAdd) {
         CategoryServiceImpl categoryHandle = new CategoryServiceImpl();

@@ -1,25 +1,26 @@
 package business.entity;
 
-import business.design.implement.CartServiceImpl;
+import business.design.implement.CartService;
 import business.design.implement.ProductServiceImpl;
 import business.utility.InputMethod;
+import run.FastFood;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class Cart implements Serializable {
     private int cartItemId;
+    private User user;
     private Product product;
-    private int price;
     private int quantity;
 
     public Cart() {
     }
 
-    public Cart(int cartItemId, Product product, int price, int quantity) {
+    public Cart(int cartItemId, User user, Product product, int quantity) {
         this.cartItemId = cartItemId;
+        this.user = user;
         this.product = product;
-        this.price = price;
         this.quantity = quantity;
     }
 
@@ -31,20 +32,20 @@ public class Cart implements Serializable {
         this.cartItemId = cartItemId;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Product getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public int getQuantity() {
@@ -56,16 +57,17 @@ public class Cart implements Serializable {
     }
 
     public void displayData() {
-        System.out.println("---------------------------------------------------------");
-        System.out.printf("%-5d |%-20s |%-20d |%5d \n"
-                , cartItemId, product.getProductName(), price, quantity);
+        System.out.println("----------------------------------------------------------------------------");
+        System.out.printf("%-5d |%-20s |%-20s |%-15s |%-10s \n"
+                , cartItemId, user.getUserFullName(),product.getProductName(), product.getProductPrice(), quantity);
     }
 
     public void inputData(boolean isAdd, List<Cart> cartList) {
         ProductServiceImpl productHandle = new ProductServiceImpl();
 
         if (isAdd) {//add
-            cartItemId = CartServiceImpl.getNewId();
+            cartItemId = CartService.getNewId();
+            user = FastFood.userCurrent;
             quantity = 1;
             while (true) {
                 System.out.println("Choose the id of the product you want add to cart");
@@ -74,19 +76,21 @@ public class Cart implements Serializable {
 
                 int id = InputMethod.getInteger();
 
-                if (productHandle.findById(id) == null) {
+                Product productAdd = productHandle.findById(id);
+
+                if (productAdd == null) {
                     System.err.println("No found the product with id " + id);
-                } else if (cartList.stream().anyMatch(c -> c.getProduct().equals(productHandle.findById(id)))) {
+                } else if (cartList.stream().anyMatch(c -> c.getProduct().getProductId()==id)) {
                     //can not add more because duplicate
                     System.err.println("This product has already been added");
-                } else if (product.getStock()>0){
+                } else if (productAdd.getStock()>0){
                     product = productHandle.findById(id);
-                    price = productHandle.findById(id).getProductPrice();
                     break;
                 }else {
                     System.err.println("This product is out of stock");
                 }
             }
+
             System.out.println("Add " + product.getProductName() + " successfully to the cart");
 
         } else {// edit
@@ -96,10 +100,10 @@ public class Cart implements Serializable {
                 int quantityInput = InputMethod.getInteger();
 
                 if (quantityInput > product.getStock()) {
-                    System.err.println("Product have not enough stock to add " + quantityInput + " quantity");
+                    System.err.println("This product just have remain "+product.getStock()+ " quantity");
                 } else {
                     quantity = quantityInput;
-                    product.setStock(product.getStock() - quantityInput);
+//                    product.setStock(product.getStock() - quantityInput);
                     System.out.println("Edit successfully!!");
                     break;
                 }

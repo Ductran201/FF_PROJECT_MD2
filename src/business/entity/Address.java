@@ -1,21 +1,27 @@
 package business.entity;
 
-public class Address {
+import business.design.implement.AddressServiceImpl;
+import business.utility.InputMethod;
+import run.FastFood;
+
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private int idAddress;
-    private int idUser;
+    private User user;
     private String addressName;
-    private String phoneUser;
-    private String nameUser;
+    private String phoneReceiver;
+    private String nameReceiver;
 
     public Address() {
     }
 
-    public Address(int idAddress, int idUser, String addressName, String phoneUser, String nameUser) {
+    public Address(int idAddress, User user, String addressName, String phoneReceiver, String nameReceiver) {
         this.idAddress = idAddress;
-        this.idUser = idUser;
+        this.user = user;
         this.addressName = addressName;
-        this.phoneUser = phoneUser;
-        this.nameUser = nameUser;
+        this.phoneReceiver = phoneReceiver;
+        this.nameReceiver = nameReceiver;
     }
 
     public int getIdAddress() {
@@ -26,12 +32,12 @@ public class Address {
         this.idAddress = idAddress;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getAddressName() {
@@ -42,30 +48,58 @@ public class Address {
         this.addressName = addressName;
     }
 
-    public String getPhoneUser() {
-        return phoneUser;
+    public String getPhoneReceiver() {
+        return phoneReceiver;
     }
 
-    public void setPhoneUser(String phoneUser) {
-        this.phoneUser = phoneUser;
+    public void setPhoneReceiver(String phoneReceiver) {
+        this.phoneReceiver = phoneReceiver;
     }
 
-    public String getNameUser() {
-        return nameUser;
+    public String getNameReceiver() {
+        return nameReceiver;
     }
 
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
+    public void setNameReceiver(String nameReceiver) {
+        this.nameReceiver = nameReceiver;
     }
 
-    public void displayData(){
+    public void displayData() {
+
+        System.out.println("----------------------------------------" +
+                "--------------------------------------------------");
+        System.out.printf("%-5s |%-20s |%-20s |%-15s |%-20s |\n"
+                , idAddress, user.getUserFullName(), addressName, phoneReceiver, nameReceiver);
 
     }
 
-    public void inputData(boolean isAdd){
+    public void inputData(boolean isAdd) {
 
-        if(isAdd){
+        if (isAdd) {
+            idAddress = AddressServiceImpl.getNewId();
+            user = FastFood.userCurrent;
+        }
 
+        System.out.println("Enter address: ");
+        addressName = InputMethod.getString();
+
+        phoneReceiver = validatePhoneInput();
+
+        System.out.println("Enter name receiver: ");
+        nameReceiver = InputMethod.getString();
+    }
+
+    //    VALIDATE
+    public String validatePhoneInput() {
+        while (true) {
+            String regexPhone = "^0\\d{9}$";
+            System.out.println("Enter phone receiver: ");
+            String phone = InputMethod.getString();
+            if (phone.matches(regexPhone)) {
+                return phone;
+            } else {
+                System.err.println("Invalid phone number");;
+            }
         }
     }
 

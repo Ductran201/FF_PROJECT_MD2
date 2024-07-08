@@ -34,12 +34,12 @@ public class FastFood {
             byte choice = InputMethod.getByte();
             switch (choice) {
                 case 1:
-//                    signIn();
-                    adminPage.openAdminPage();
+                    signIn();
+//                    adminPage.openAdminPage();
                     break;
                 case 2:
-//                    signUp();
-                    userPage.openUserPage();
+                    signUp();
+//                    userPage.openUserPage();
                     break;
                 case 3:
                     getPassword();
@@ -74,8 +74,8 @@ public class FastFood {
             } else {
 //                Open admin page
                 adminPage.openAdminPage();
-            }
 
+            }
         } else {
             System.err.println("The email or password is incorrect");
             while (true) {

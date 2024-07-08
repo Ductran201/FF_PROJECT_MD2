@@ -79,7 +79,7 @@ public class UserService {
         String nameSearch = InputMethod.getString();
 
         List<User> usersFilter = users.stream()
-                .filter(u -> u.getUserName().toLowerCase().contains(nameSearch.toLowerCase()))
+                .filter(u -> u.getUserFullName().toLowerCase().contains(nameSearch.toLowerCase()))
                 .toList();
 
         if (usersFilter.isEmpty()){
@@ -92,7 +92,7 @@ public class UserService {
 
     public void sortByName() {
         System.out.println("Order name a-z: ");
-        users.sort(((o1, o2) -> o1.getUserName().compareTo(o2.getUserName())));
+        users.sort(((o1, o2) -> o1.getUserFullName().compareTo(o2.getUserFullName())));
         users.forEach(User::displayData);
 
     }

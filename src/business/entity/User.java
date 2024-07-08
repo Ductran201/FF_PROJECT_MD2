@@ -1,5 +1,6 @@
 package business.entity;
 
+import business.design.implement.AddressServiceImpl;
 import business.design.implement.UserService;
 import business.utility.InputMethod;
 
@@ -15,12 +16,12 @@ public class User implements Serializable {
     private String userPhone;
     private boolean userStatus;
     private RoleName userRole;
-    private Address UserAddress;
+    private Address userAddress;
 
     public User() {
     }
 
-    public User(int userId, String userEmail, String userPassword, String userFullName, String userPhone, boolean userStatus, RoleName userRole) {
+    public User(int userId, String userEmail, String userPassword, String userFullName, String userPhone, boolean userStatus, RoleName userRole, Address userAddress) {
         this.userId = userId;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
@@ -28,6 +29,7 @@ public class User implements Serializable {
         this.userPhone = userPhone;
         this.userStatus = userStatus;
         this.userRole = userRole;
+        this.userAddress = userAddress;
     }
 
     public int getUserId() {
@@ -38,6 +40,14 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public String getUserPassword() {
         return userPassword;
     }
@@ -46,20 +56,12 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    public String getUserName() {
+    public String getUserFullName() {
         return userFullName;
     }
 
-    public void setUserName(String userFullName) {
+    public void setUserFullName(String userFullName) {
         this.userFullName = userFullName;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     public String getUserPhone() {
@@ -86,7 +88,13 @@ public class User implements Serializable {
         this.userRole = userRole;
     }
 
+    public Address getUserAddress() {
+        return userAddress;
+    }
 
+    public void setUserAddress(Address userAddress) {
+        this.userAddress = userAddress;
+    }
 
     public void displayData(){
         System.out.println("-----------------------------------------------------------" +
@@ -98,8 +106,12 @@ public class User implements Serializable {
     public void displayDataUser(){
         System.out.println("-----------------------------------------------------------" +
                 "-------------------------------");
-        System.out.printf("%-20s |%-20s |%-12s |\n"
-                ,userEmail,userFullName,userPhone);
+        System.out.printf("%-20s |%-20s |%-12s |%-15s\n"
+                ,userEmail,userFullName,userPhone,updateTotalAddress());
+    }
+
+    public int updateTotalAddress(){
+        return (int) AddressServiceImpl.addressList.stream().filter(a->a.getUser().getUserId()==userId).count();
     }
 
     public void inputData(boolean isAdd){
