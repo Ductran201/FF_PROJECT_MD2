@@ -13,6 +13,7 @@ public class UserPage {
     UserService userService = new UserService();
     AddressServiceImpl addressService = new AddressServiceImpl();
     WishListService wishListService = new WishListService();
+    OrderService orderService = new OrderService();
 
     public void openUserPage() {
         System.out.println("WELCOME " + FastFood.userCurrent.getUserFullName().toUpperCase() + " TO FAST FOOD");
@@ -47,6 +48,7 @@ public class UserPage {
                     cartManagement.openCartManagement();
                     break;
                 case 6:
+                    openOrderManagement();
                     break;
                 case 7:
                     return;
@@ -191,6 +193,29 @@ public class UserPage {
                     System.err.println("Wrong input, try again");
             }
         }
+    }
+
+    public void openOrderManagement() {
+        while (true) {
+            System.out.println("================ORDER HISTORY===============");
+            System.out.println("||                                        ||");
+            System.out.println("||       1. SHOW ALL ORDER HISTORY        ||");
+            System.out.println("||       2. BACK                          ||");
+            System.out.println("||                                        ||");
+            System.out.println("===========================================");
+            System.out.print("Your choice: ");
+            byte choice = InputMethod.getByte();
+            switch (choice) {
+                case 1:
+                    orderService.showAll();
+                    break;
+                case 2:
+                    return;
+                default:
+                    System.err.println("Wrong input, try again");
+            }
+        }
+
     }
 
 }

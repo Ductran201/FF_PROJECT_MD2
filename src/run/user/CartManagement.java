@@ -1,10 +1,12 @@
 package run.user;
 
 import business.design.implement.CartService;
+import business.design.implement.OrderService;
 import business.utility.InputMethod;
 
 public class CartManagement {
     CartService cartService = new CartService();
+    OrderService orderService = new OrderService();
 
     public void openCartManagement() {
         while (true) {
@@ -15,7 +17,8 @@ public class CartManagement {
             System.out.println("||     3. UPDATE QUANTITY OF CART ITEM   ||");
             System.out.println("||     4. DELETE ONE PRODUCT FROM CART   ||");
             System.out.println("||     5. DELETE ALL ITEMS FROM CART     ||");
-            System.out.println("||     6. BACK                           ||");
+            System.out.println("||     6. CHECK OUT                      ||");
+            System.out.println("||     7. BACK                           ||");
             System.out.println("||                                       ||");
             System.out.println("===========================================");
             System.out.print("Your choice: ");
@@ -37,6 +40,9 @@ public class CartManagement {
                     cartService.deleteAllCart();
                     break;
                 case 6:
+                    cartService.checkOutCart();
+                    break;
+                case 7:
                     return;
                 default:
                     System.err.println("Wrong input");
